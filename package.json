@@ -2,9 +2,10 @@
   "name": "note-sync",
   "displayName": "Note Sync",
   "description": "Note Sync（笔记同步）",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "publisher": "JSShou",
+  "icon": "images/logo.png",
   "homepage": "https://github.com/xuzhongpeng/vscode-note-sync",
   "engines": {
     "vscode": "^1.50.0"

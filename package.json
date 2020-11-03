@@ -1,11 +1,27 @@
 {
   "name": "note-sync",
-  "displayName": "note synchronization",
-  "description": "note synchronization（笔记同步）",
-  "version": "0.0.1",
+  "displayName": "Note Sync",
+  "description": "Note Sync（笔记同步）",
+  "version": "1.0.0",
+  "license": "MIT",
+  "publisher": "JSShou",
+  "homepage": "https://github.com/xuzhongpeng/vscode-note-sync",
   "engines": {
     "vscode": "^1.50.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xuzhongpeng/vscode-note-sync"
+  },
+  "bugs": {
+    "url": "https://github.com/xuzhongpeng/vscode-note-sync/issues"
+  },
+  "keywords": [
+    "github笔记同步",
+    "git note sync",
+    "自动同步",
+    "Automatic synchronization"
+  ],
   "categories": [
     "Other"
   ],
@@ -27,7 +43,7 @@
         "noteSync.timeout": {
           "type": "number",
           "description": "timeout to synchronization projects",
-          "default": 1000
+          "default": 10000
         },
         "noteSync.shell": {
           "type": "string",
@@ -36,13 +52,13 @@
         },
         "noteSync.pullCommand": {
           "type": "string",
-          "description": "Specify the command to be executed after file saved.",
+          "description": "Specify the command to be executed after project is open",
           "default": null
         },
         "noteSync.pushCommit": {
           "type": "string",
-          "description": "push commit message to github or ...",
-          "default": "自动同步"
+          "description": "push commit message to github or gitlab.Only works when `noteSync.pushCommand` is not set",
+          "default": "note-sync syncing"
         },
         "noteSync.pushCommand": {
           "type": "string",
@@ -51,18 +67,18 @@
         },
         "noteSync.pullStatusMessage": {
           "type": "string",
-          "description": "Specify the status bar message when the shell command began to run. Only works when `runIn=backend`.",
-          "default": "笔记正在下拉"
+          "description": "Specify the status bar message when the shell command began to run.",
+          "default": "Note pulling"
         },
         "noteSync.runningStatusMessage": {
           "type": "string",
-          "description": "Specify the status bar message when the shell command began to run. Only works when `runIn=backend`.",
-          "default": "笔记正在同步"
+          "description": "Specify the status bar message when the shell command is running.",
+          "default": "Notes uploading"
         },
         "noteSync.finishStatusMessage": {
           "type": "string",
-          "description": "Specify the status bar message after the shell command finished executing. Only works when `runIn=backend`.",
-          "default": "笔记同步完成"
+          "description": "Specify the status bar message after the shell command finished executing.",
+          "default": "Note upload complete"
         }
       }
     }

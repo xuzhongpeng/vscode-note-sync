@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
 import { NoteSyncExtension } from './note-sync'
 export function activate(context: vscode.ExtensionContext) {
-	// let extension = new RunOnSaveExtension(context)
 	let config = vscode.workspace.getConfiguration('noteSync')
 	let isActive = config.enableNoteSync
 	let noteSync = new NoteSyncExtension(context)
@@ -28,13 +27,13 @@ export function activate(context: vscode.ExtensionContext) {
 		// 	//执行disableNoteSync命令时 修改配置并关闭插件
 		// 	console.log("loading2")
 		// }),
+		//todo文件保存前需要做的事情放这里
+		// vscode.workspace.onWillSaveTextDocument((e: vscode.TextDocumentWillSaveEvent) => {
+		// 	
+		// 	if (isActive) {
 
-		vscode.workspace.onWillSaveTextDocument((e: vscode.TextDocumentWillSaveEvent) => {
-			//文件保存前需要做的事情放这里
-			if (isActive) {
-
-			}
-		}),
+		// 	}
+		// }),
 
 		vscode.workspace.onDidSaveTextDocument((document: vscode.TextDocument) => {
 			//文件保存后要做的事情放这里

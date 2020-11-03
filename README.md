@@ -1,36 +1,44 @@
-# note-sync README
+# Note Sync - VSCode Extension
 
-This is the README for your extension "note-sync". After writing up a brief description, we recommend including the following sections.
+## Features(功能)
 
-## Features
+1. Automatically synchronize code after opening notes
+2. After saving the file, automatically push all files to GitHub or Gitlab
 
-功能：
-1. 打开笔记后自动同步代码（个人项目插件开启，否则不运行此插件，为了使用其它项目的时候的性能）
-2. 保存代码后自动push代码到github
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
+1. 打开笔记后自动同步代码（建议在需要使用该插件的项目中在`.vscode->settings`中配置`noteSync.enableNoteSync`:`true`，否则不运行此插件，为了使用其它项目的时候的性能和安全）
+2. 保存代码后自动Push代码到Github或者Gitlab
 
 
 
-### For more information
+## Attention（注意）
 
+It is recommended to open the '. Vscode > Settings' in the project that needs to use the plug-in` noteSync.enableNoteSync `Otherwise, the plug-in will not be run. In order to use the performance and security opened by other projects
 
+建议在需要使用该插件的项目中在`.vscode->settings`中配置`noteSync.enableNoteSync`:`true`，否则不运行此插件，为了使用其它项目开启的性能和安全
 
-**Enjoy!**
+## Configuration
+
+| Name                             | Description | Default
+| ---                              | --- | ---
+| `noteSync.enableNoteSync` | you can open note sync plugin with `true` | `false`
+| `noteSync.timeout`             | timeout to synchronization projects.The `push` command will be executed after `timeout`| `10000`
+| `noteSync.shell`                | Specify in which shell the commands are executed, defaults to the default vscode shell.unix default is `/bin/sh`，windows default is `cmd.exe`| `null`
+| `noteSync.pullCommand`|Specify the command to be executed after project is open|`null`
+| `noteSync.pushCommit`| push commit message to github or gitlab.Only works when `noteSync.pushCommand` is not set|`note-sync syncing`
+| `noteSync.pushCommand`|Specify the command to be executed after file saved.|`null`
+|`noteSync.pullStatusMessage`|Specify the status bar message when the shell command began to run.|`Note pulling`
+|`noteSync.runningStatusMessage`|Specify the status bar message when the shell command is running.|`Notes uploading`
+|`noteSync.finishStatusMessage`|Specify the status bar message after the shell command finished executing.|`Note upload complete`
+
+## Sample Configuration
+
+```
+{
+  "noteSync.enableNoteSync": true,
+  "noteSync.pullStatusMessage": "Note pulling",
+  "noteSync.runningStatusMessage": "Notes uploading",
+  "noteSync.finishStatusMessage": "Note upload complete",
+}
+```
+## License
+MIT

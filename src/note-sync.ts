@@ -89,8 +89,6 @@ export class NoteSyncExtension {
 
                 if (e !== 0) {
                     this.channel.show(true);
-                } else {
-                    await this.pushCode();
                 }
                 resolve();
             });
@@ -106,10 +104,11 @@ export class NoteSyncExtension {
             this.timer = setTimeout(() => {
                 this.timer = undefined;
                 let path = vscode.workspace.rootPath;
+                console.log(path)
+                let pushCommit = this.config.pushCommit ?? "note sync plugin synchronization"
                 let pushShell =
                     this.pullCommand() ??
-                    `git -C ${path} add .&&git -C ${path} commit -m ${this.config.pushCommit ?? "note sync plugin synchronization"
-                    }&&git -C ${path} push -u origin HEAD`;
+                    `git -C ${path} add .&&git -C ${path} commit -m "${pushCommit}"&&git -C ${path} push -u origin HEAD`;
                 // sleep ${this.config.timeout}&
                 console.log(pushShell);
 

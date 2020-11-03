@@ -2,7 +2,7 @@
   "name": "note-sync",
   "displayName": "Note Sync",
   "description": "Note Sync（笔记同步）",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "publisher": "JSShou",
   "icon": "images/logo.png",

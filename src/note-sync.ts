@@ -72,7 +72,7 @@ export class NoteSyncExtension {
             return;
         }
         let path = vscode.workspace.rootPath;
-        let pullShell = this.pullCommand() ?? `git -C ${path} pull -f`;
+        let pullShell = this.pullCommand() ?? `git -C "${path}" pull -f`;
         return new Promise((resolve) => {
             this.showChannelMessage(`Running ${pullShell}`);
             if (this.config.pullStatusMessage) {
@@ -108,7 +108,7 @@ export class NoteSyncExtension {
                 let pushCommit = this.config.pushCommit ?? "note sync plugin synchronization"
                 let pushShell =
                     this.pullCommand() ??
-                    `git -C ${path} add .&&git -C ${path} commit -m "${pushCommit}"&&git -C ${path} push -u origin HEAD`;
+                    `git -C "${path}" add .&&git -C "${path}" commit -m "${pushCommit}"&&git -C "${path}" push -u origin HEAD`;
                 // sleep ${this.config.timeout}&
                 console.log(pushShell);
 

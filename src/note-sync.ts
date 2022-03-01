@@ -48,7 +48,7 @@ export class NoteSyncExtension {
     private showStatusMessage(message: string) {
         let disposable = vscode.window.setStatusBarMessage(
             message,
-            this.config.get("timeout") || 1000
+            2000
         );
         this.context.subscriptions.push(disposable);
     }
@@ -79,8 +79,8 @@ export class NoteSyncExtension {
             // eslint-disable-next-line @typescript-eslint/semi
             return pushCommandStr
               .toString()
-              .replaceAll("${path}", path ?? "")
-              .replaceAll("${pushCommit}", pushCommit);
+              .replace(new RegExp("${path}","gm"), path ?? "")
+              .replace(new RegExp("${pushCommit}","gm"), pushCommit);
         }
         return undefined;
     }
@@ -123,13 +123,12 @@ export class NoteSyncExtension {
                 this.timer = undefined;
                 let path = vscode.workspace.rootPath;
                 console.log(path)
-                let pushCommit = this.config.pushCommit ?? "note sync plugin synchronization"
+                let pushCommit = this.config.pushCommitMessage ?? "note sync plugin synchronization"
                 let pushShell =
                     this.pushCommand(pushCommit) ??
-                    `git -C "${path}" add .&&git -C "${path}" commit -m "${pushCommit}"&&git -C "${path}" push -u origin HEAD`;
+                    `git -C ${path} add .&&git -C ${path} commit -m "${pushCommit}"&&git -C ${path} push -u origin HEAD`;
                 // sleep ${this.config.timeout}&
                 console.log(pushShell);
-
                 this.showChannelMessage(`Running ${pushShell}`);
                 if (this.config.pushStatusMessage) {
                     this.showStatusMessage(this.config.pushStatusMessage);
@@ -157,7 +156,7 @@ export class NoteSyncExtension {
                     }
                     resolve();
                 });
-            }, this.config.timeout ?? 5000);
+            }, this.config.delayTime ?? 10000);
         }) as Promise<void>;
     }
 }

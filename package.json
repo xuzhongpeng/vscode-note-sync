@@ -2,7 +2,7 @@
   "name": "note-sync",
   "displayName": "Note Sync",
   "description": "Note Sync（笔记同步）",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "license": "MIT",
   "publisher": "JSShou",
   "icon": "images/logo.png",
@@ -42,9 +42,9 @@
           "description": "you can open note sync plugin with true",
           "default": false
         },
-        "noteSync.timeout": {
+        "noteSync.delayTime": {
           "type": "number",
-          "description": "timeout to synchronization projects",
+          "description": "delay time to synchronization projects.The `push` command will be executed after `delayTime`| `10000` millisecond",
           "default": 10000
         },
         "noteSync.shell": {
@@ -57,9 +57,9 @@
           "description": "Specify the command to be executed after project is open",
           "default": null
         },
-        "noteSync.pushCommit": {
+        "noteSync.pushCommitMessage": {
           "type": "string",
-          "description": "push commit message to github or gitlab.Only works when `noteSync.pushCommand` is not set",
+          "description": "push commit message to Github or Gitlab. Only works when `noteSync.pushCommand` is not set",
           "default": "note-sync syncing"
         },
         "noteSync.pushCommand": {
@@ -72,7 +72,7 @@
           "description": "Specify the status bar message when the shell command began to run.",
           "default": "Note pulling"
         },
-        "noteSync.runningStatusMessage": {
+        "noteSync.pushStatusMessage": {
           "type": "string",
           "description": "Specify the status bar message when the shell command is running.",
           "default": "Notes uploading"
@@ -86,6 +86,7 @@
     }
   },
   "scripts": {
+    "push": "vsce publish",
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "lint": "eslint src --ext ts",

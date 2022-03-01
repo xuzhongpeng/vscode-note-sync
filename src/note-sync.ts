@@ -1,5 +1,7 @@
 import { exec, ChildProcess } from "child_process";
 import * as vscode from "vscode";
+const fs = require('fs');
+
 // import {RawCommand, CommandProcessor, BackendCommand, TerminalCommand, VSCodeCommand} from './command-processor'
 export class NoteSyncExtension {
     private context: vscode.ExtensionContext;
@@ -7,13 +9,13 @@ export class NoteSyncExtension {
     private channel: vscode.OutputChannel = vscode.window.createOutputChannel(
         "Note Sync"
     );
+    private localSettings:any;
     // private commandProcessor: CommandProcessor = new CommandProcessor()
     private timer!: any;
     constructor(context: vscode.ExtensionContext) {
         this.context = context;
         this.loadConfig();
         this.showEnablingChannelMessage();
-
         context.subscriptions.push(this.channel);
         this.pullCode()
     }
@@ -24,6 +26,12 @@ export class NoteSyncExtension {
     }
     loadConfig() {
         this.config = vscode.workspace.getConfiguration("noteSync");
+        try {
+            let localSettingStr = fs.readFileSync(`${vscode.workspace.rootPath}/.vscode/noteSync.json`, 'utf8');
+            this.localSettings = JSON.parse(localSettingStr)
+        } catch(e) {
+            this.localSettings = {};
+        }
     }
     //判断插件是否开启
     getEnabled(): boolean {
@@ -58,13 +66,23 @@ export class NoteSyncExtension {
     }
     // 获取脚本环境 unix上默认是/bin/sh，windows上默认是cmd.exe
     private getShellPath(): string | undefined {
-        return this.config.get("shell") || undefined;
+        return this.localSettings['shell'] || this.config.get("shell") || undefined;
     }
     private pullCommand(): string | undefined {
-        return this.config.get("pullCommand") || undefined;
+        return this.localSettings['pullCommand'] || this.config.get("pullCommand") || undefined;
     }
-    private pushCommand(): string | undefined {
-        return this.config.get("pushCommand") || undefined;
+    private pushCommand(pushCommit:string): string | undefined {
+        let pushCommandStr:string|undefined = this.localSettings['pushCommand'];
+        pushCommandStr = pushCommandStr ?? this.config.get("pushCommand");
+        if (pushCommandStr) {
+            let path = vscode.workspace.rootPath;
+            // eslint-disable-next-line @typescript-eslint/semi
+            return pushCommandStr
+              .toString()
+              .replaceAll("${path}", path ?? "")
+              .replaceAll("${pushCommit}", pushCommit);
+        }
+        return undefined;
     }
     //下拉笔记
     private pullCode() {
@@ -107,7 +125,7 @@ export class NoteSyncExtension {
                 console.log(path)
                 let pushCommit = this.config.pushCommit ?? "note sync plugin synchronization"
                 let pushShell =
-                    this.pullCommand() ??
+                    this.pushCommand(pushCommit) ??
                     `git -C "${path}" add .&&git -C "${path}" commit -m "${pushCommit}"&&git -C "${path}" push -u origin HEAD`;
                 // sleep ${this.config.timeout}&
                 console.log(pushShell);

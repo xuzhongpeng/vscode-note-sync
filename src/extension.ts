@@ -40,6 +40,9 @@ export function activate(context: vscode.ExtensionContext) {
 			if (isActive) {
 				noteSync.pushCode()
 			}
+			if(document.fileName.includes('noteSync')) {
+				noteSync.loadConfig()
+			}
 		}),
 	)
 

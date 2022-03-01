@@ -27,7 +27,8 @@
     "Other"
   ],
   "activationEvents": [
-    "*"
+    "workspaceContains:**/settings.json",
+    "workspaceContains:**/noteSync.json"
   ],
   "main": "./out/extension.js",
   "contributes": {

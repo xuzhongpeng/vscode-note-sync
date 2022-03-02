@@ -1,4 +1,6 @@
 # Change Log
+## [1.0.5]
+1. fix bugs
 ## [1.0.4]
 1. support `noteSync.json`
 ## [1.0.3]

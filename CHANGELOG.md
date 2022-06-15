@@ -1,4 +1,7 @@
 # Change Log
+
+## [1.0.6]
+1. add `vscode.workspace.createFileSystemWatcher` api to listen file create and delete
 ## [1.0.5]
 1. fix bugs
 ## [1.0.4]
